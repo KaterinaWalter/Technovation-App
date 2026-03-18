@@ -1,1 +1,653 @@
+/* ============================================
+   GENERAL STYLES
+   ============================================ */
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px 0;
+  color: #333;
+}
+
+.main-container {
+  min-height: 100vh;
+}
+
+/* ============================================
+   HEADER SECTION
+   ============================================ */
+
+.header-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 50px 20px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.header-section::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -20%;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+.header-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: -1px;
+  position: relative;
+  z-index: 1;
+}
+
+.header-title i {
+  margin-right: 12px;
+  animation: spin 20s linear infinite;
+}
+
+.header-subtitle {
+  font-size: 1.15rem;
+  opacity: 0.95;
+  font-weight: 300;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 0.5px;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ============================================
+   LOADING & ERROR STATES
+   ============================================ */
+
+.spinner-border {
+  color: #667eea;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-width: 4px;
+  animation: spin 0.8s linear infinite;
+}
+
+#loadingSpinner {
+  padding: 40px 20px;
+}
+
+#loadingSpinner p {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+#errorMessage {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
+  border: none;
+  border-left: 5px solid #e74c3c;
+  background: linear-gradient(135deg, #fadbd8 0%, #f5b7b1 100%);
+  color: #922b21;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.2);
+}
+
+#errorMessage strong {
+  color: #922b21;
+}
+
+/* ============================================
+   CARD STYLES
+   ============================================ */
+
+.weather-card,
+.air-quality-card,
+.recommendations-card {
+  background: white;
+  border-radius: 20px;
+  padding: 35px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+  margin-bottom: 25px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.weather-card:hover,
+.air-quality-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 60px rgba(102, 126, 234, 0.2);
+}
+
+.recommendations-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  letter-spacing: -0.5px;
+}
+
+.section-title i {
+  color: #667eea;
+  font-size: 2.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+}
+
+/* ============================================
+   WEATHER INFO
+   ============================================ */
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.temperature-display {
+  font-size: 4.5rem;
+  color: #667eea;
+  font-weight: 800;
+  text-align: center;
+  margin: 10px 0;
+  text-shadow: 0 2px 4px rgba(102, 126, 234, 0.1);
+}
+
+.temp-value {
+  display: inline;
+}
+
+.weather-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.weather-detail {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 16px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #f0f1f5 100%);
+  border-radius: 14px;
+  border-left: 5px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+.weather-detail:hover {
+  background: linear-gradient(135deg, #eff1f9 0%, #e8ecf5 100%);
+  transform: translateX(4px);
+}
+
+.detail-icon {
+  font-size: 1.8rem;
+  color: #667eea;
+  min-width: 35px;
+  text-align: center;
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.detail-label {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  font-size: 1.3rem;
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+.weather-condition {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 14px;
+  color: white;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
+}
+
+.condition-text {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+
+.feels-like {
+  font-size: 1rem;
+  opacity: 0.95;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ============================================
+   AIR QUALITY
+   ============================================ */
+
+.air-quality-info {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.aqi-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 14px;
+  color: white;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.aqi-score::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.aqi-number {
+  font-size: 4rem;
+  font-weight: 900;
+  position: relative;
+  z-index: 1;
+  letter-spacing: -2px;
+}
+
+.aqi-label {
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  letter-spacing: 0.5px;
+}
+
+.pollutants-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.pollutant-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #f0f1f5 100%);
+  border-radius: 12px;
+  border-left: 4px solid #764ba2;
+  transition: all 0.3s ease;
+}
+
+.pollutant-item:hover {
+  background: linear-gradient(135deg, #eff1f9 0%, #e8ecf5 100%);
+  transform: translateX(4px);
+}
+
+.pollutant-name {
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 0.95rem;
+}
+
+.pollutant-value {
+  color: #667eea;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* ============================================
+   CONDITION ANALYSIS
+   ============================================ */
+
+.condition-analysis {
+  background: linear-gradient(135deg, #f8f9fa 0%, #f0f1f5 100%);
+  padding: 25px;
+  border-radius: 14px;
+  border-left: 5px solid #667eea;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.analysis-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 12px;
+  background: white;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border-left: 4px solid #667eea;
+}
+
+.analysis-item:last-child {
+  margin-bottom: 0;
+}
+
+.analysis-item:hover {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  transform: translateX(3px);
+}
+
+.analysis-icon {
+  font-size: 1.4rem;
+  min-width: 30px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.analysis-text {
+  color: #2c3e50;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* ============================================
+   PRODUCT RECOMMENDATIONS
+   ============================================ */
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  border: 2px solid #e9ecef;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+  transform: translateY(-6px);
+}
+
+.product-card:hover::before {
+  transform: scaleX(1);
+}
+
+.product-icon {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.product-name {
+  font-weight: 800;
+  color: #2c3e50;
+  font-size: 1.2rem;
+  letter-spacing: -0.3px;
+}
+
+.product-category {
+  font-size: 0.75rem;
+  color: #667eea;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  background: linear-gradient(135deg, #eff1f9 0%, #e8ecf5 100%);
+  padding: 6px 12px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.product-description {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.product-reason {
+  font-size: 0.85rem;
+  color: #764ba2;
+  font-weight: 600;
+  font-style: italic;
+  padding: 12px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #f0f1f5 100%);
+  border-left: 3px solid #764ba2;
+  border-radius: 6px;
+}
+
+.product-ingredients {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  padding-top: 12px;
+  border-top: 2px solid #ecf0f1;
+  line-height: 1.6;
+}
+
+.product-ingredients strong {
+  color: #667eea;
+  font-weight: 700;
+}
+
+/* ============================================
+   REFRESH BUTTON
+   ============================================ */
+
+#refreshBtn {
+  border-color: #667eea;
+  color: #667eea;
+  font-weight: 700;
+  transition: all 0.4s ease;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 2px solid #667eea;
+  background: transparent;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  font-size: 0.95rem;
+}
+
+#refreshBtn:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  transform: translateY(-2px);
+}
+
+#refreshBtn:active {
+  transform: translateY(0);
+}
+
+#refreshBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+  .header-title {
+    font-size: 2.2rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .temperature-display {
+    font-size: 3.5rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .weather-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pollutants-list {
+    grid-template-columns: 1fr;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .weather-card,
+  .air-quality-card,
+  .recommendations-card {
+    padding: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px 0;
+  }
+
+  .header-section {
+    padding: 30px 15px;
+  }
+
+  .header-title {
+    font-size: 1.8rem;
+  }
+
+  .header-title i {
+    margin-right: 8px;
+    font-size: 1.8rem;
+  }
+
+  .temperature-display {
+    font-size: 2.5rem;
+  }
+
+  .aqi-number {
+    font-size: 2.5rem;
+  }
+
+  .weather-card,
+  .air-quality-card,
+  .recommendations-card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+  }
+
+  .section-title i {
+    width: 35px;
+    height: 35px;
+    font-size: 1.3rem;
+  }
+
+  .weather-details-grid {
+    gap: 12px;
+  }
+
+  .aqi-score {
+    padding: 30px 20px;
+  }
+}
