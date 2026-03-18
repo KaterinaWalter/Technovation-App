@@ -1,1 +1,78 @@
+body {
+  background: linear-gradient(180deg, #f3f8ff, #e9f1fe);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.card {
+  border: 0;
+}
+
+#alerts .alert {
+  margin-bottom: 0;
+}
+
+#recommendations li {
+  min-height: 63px;
+}
+
+body {
+  color: #2e2f4f;
+  background: linear-gradient(135deg, #ffe7f3 0%, #fff8d2 50%, #e6f2ff 100%);
+}
+
+h1, h5 {
+  color: #3f246d;
+}
+
+.card {
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(62, 30, 100, 0.12);
+}
+
+.card-body {
+  background-color: rgba(255, 255, 255, 0.92);
+}
+
+#alerts .alert {
+  background-color: #ffd9e6;
+  border-color: #ffb7d0;
+  color: #61254c;
+}
+
+button#refreshBtn {
+  background: linear-gradient(90deg, #ff7acc 0%, #7f8cff 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  border-radius: 50px;
+}
+
+button#refreshBtn:hover {
+  opacity: 0.9;
+}
+
+#topics .topic-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: .8rem;
+}
+
+.topic-card {
+  margin-bottom: .6rem;
+  border: 2px solid #ffd6f2;
+  background: linear-gradient(125deg, #fff8fb, #f7f4ff);
+}
+
+.topic-card h6 {
+  margin-top: .5rem;
+  font-size: 1rem;
+  color: #622b7e;
+}
+
+.topic-card p {
+  font-size: .88rem;
+  margin-bottom: .5rem;
+  color: #4f3f6f;
+}
 

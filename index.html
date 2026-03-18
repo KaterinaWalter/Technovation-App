@@ -13,9 +13,51 @@
 </head>
 
 <body>
-  <h1>Hello World</h1>
+  <div class="container py-4">
+    <header class="mb-4 text-center">
+      <h1>NYC Live Weather + Skincare Recommender</h1>
+      <p class="text-muted">Live data for New York City, including air quality and humidity</p>
+    </header>
 
+    <div id="alerts" class="mb-3"></div>
 
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Current conditions</h5>
+            <ul class="list-group list-group-flush" id="weather-list">
+              <li class="list-group-item">Temperature: <span id="temp">–</span></li>
+              <li class="list-group-item">Humidity: <span id="humidity">–</span></li>
+              <li class="list-group-item">Conditions: <span id="conditions">–</span></li>
+              <li class="list-group-item">Wind Speed: <span id="wind">–</span></li>
+              <li class="list-group-item">Precipitation Chance: <span id="precip">–</span></li>
+              <li class="list-group-item">Air Quality (PM2.5): <span id="aqi">–</span></li>
+            </ul>
+            <button id="refreshBtn" class="btn btn-primary mt-3">Refresh Data</button>
+          </div>
+        </div>
+      </div>
 
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Skincare Recommendations</h5>
+            <ul class="list-group" id="recommendations"></ul>
+          </div>
+        </div>
+        <div class="card shadow-sm mt-3">
+          <div class="card-body">
+            <h5 class="card-title">Skin Care Topics</h5>
+            <div id="topics" class="row g-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="mt-4 text-center text-muted">Powered by Open-Meteo and OpenAQ APIs</footer>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
