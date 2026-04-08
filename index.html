@@ -21,24 +21,44 @@
 
     <div id="alerts" class="mb-3"></div>
 
-    <div class="row g-3">
-      <div class="col-md-6">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title">Current conditions</h5>
-            <ul class="list-group list-group-flush" id="weather-list">
-              <li class="list-group-item">Temperature: <span id="temp">–</span></li>
-              <li class="list-group-item">Humidity: <span id="humidity">–</span></li>
-              <li class="list-group-item">Conditions: <span id="conditions">–</span></li>
-              <li class="list-group-item">Wind Speed: <span id="wind">–</span></li>
-              <li class="list-group-item">Precipitation Chance: <span id="precip">–</span></li>
-              <li class="list-group-item">Air Quality (PM2.5): <span id="aqi">–</span></li>
-            </ul>
-            <button id="refreshBtn" class="btn btn-primary mt-3">Refresh Data</button>
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h5 class="card-title">New York Current Conditions</h5>
+        <div id="current-weather" class="current-weather mb-4">
+          <div class="weather-main">
+            <div class="weather-icon" id="weather-icon">☀️</div>
+            <div class="weather-temp" id="weather-temp">--°C</div>
           </div>
+          <div class="weather-details">
+            <div class="detail-item">
+              <span class="detail-label">Feels like</span>
+              <span class="detail-value" id="feels-like">--°C</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Humidity</span>
+              <span class="detail-value" id="humidity">--%</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Wind</span>
+              <span class="detail-value" id="wind">-- m/s</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Precipitation</span>
+              <span class="detail-value" id="precip">--%</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Air Quality</span>
+              <span class="detail-value" id="aqi">-- µg/m³</span>
+            </div>
+          </div>
+          <div class="weather-condition" id="conditions">--</div>
         </div>
+        <div id="weekly-forecast" class="weekly-forecast d-flex flex-row overflow-auto"></div>
+        <button id="refreshBtn" class="btn btn-primary mt-3">Refresh Data</button>
       </div>
+    </div>
 
+    <div class="row g-3">
       <div class="col-md-6">
         <div class="card shadow-sm">
           <div class="card-body">
