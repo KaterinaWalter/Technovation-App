@@ -18,9 +18,18 @@
   <div class="main-container">
     <!-- Header -->
     <header class="header-section">
-      <div class="container-fluid">
-        <h1 class="header-title"><i class="fas fa-cloud-sun"></i> NYC Weather Skincare Assistant</h1>
-        <p class="header-subtitle">Get personalized skincare recommendations based on NYC's current weather conditions</p>
+      <div class="container-fluid header-content">
+        <div class="header-top">
+          <div class="header-text">
+            <h1 class="header-title"><i class="fas fa-cloud-sun"></i> NYC Weather & Skincare Assistant</h1>
+            <p class="header-subtitle">Personalized weather and skincare guidance for New York City.</p>
+          </div>
+          <div class="header-controls">
+            <button id="darkModeBtn" class="control-btn" title="Toggle Dark Mode">
+              <i class="fas fa-moon"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -41,48 +50,164 @@
     <!-- Main Content -->
     <div id="mainContent" style="display: none;">
       <div class="container-lg mt-4">
+        <!-- Skin Type Selector -->
+        <div class="skin-type-selector mb-4">
+          <label class="selector-label"><i class="fas fa-user"></i> My Skin Type:</label>
+          <div class="skin-type-options">
+            <button class="skin-type-btn" data-type="normal">Normal</button>
+            <button class="skin-type-btn" data-type="oily">Oily</button>
+            <button class="skin-type-btn" data-type="dry">Dry</button>
+            <button class="skin-type-btn" data-type="combination">Combination</button>
+            <button class="skin-type-btn" data-type="sensitive">Sensitive</button>
+          </div>
+          <div id="skinTypeSummary" class="skin-type-summary">Select your skin type to get tailored guidance and skincare matches.</div>
+        </div>
+
+        <!-- Skin Type Information Cards -->
+        <div id="skinTypeInfoContainer" class="row mb-4">
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="skin-type-info-card" data-type="normal">
+              <h4><i class="fas fa-leaf"></i> Normal</h4>
+              <p>Balanced, healthy skin with minimal concerns. Produces just the right amount of oils.</p>
+              <div class="skin-type-characteristics">
+                <span class="characteristic-item">🟢 Well-balanced</span>
+                <span class="characteristic-item">📍 Minimal pores</span>
+                <span class="characteristic-item">✨ Even texture</span>
+                <span class="characteristic-item">🛡️ Healthy barrier</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="skin-type-info-card" data-type="oily">
+              <h4><i class="fas fa-oil-can"></i> Oily</h4>
+              <p>Produces excess sebum, often with visible pores and tendency toward breakouts.</p>
+              <div class="skin-type-characteristics">
+                <span class="characteristic-item">💧 Excess oils</span>
+                <span class="characteristic-item">🔴 Large pores</span>
+                <span class="characteristic-item">🎭 Frequent shine</span>
+                <span class="characteristic-item">⚠️ Acne-prone</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="skin-type-info-card" data-type="dry">
+              <h4><i class="fas fa-snowflake"></i> Dry</h4>
+              <p>Lacks moisture and oils, often feels tight and may show flaking or irritation.</p>
+              <div class="skin-type-characteristics">
+                <span class="characteristic-item">🏜️ Tight feeling</span>
+                <span class="characteristic-item">🍃 Flaky patches</span>
+                <span class="characteristic-item">😣 Easily irritated</span>
+                <span class="characteristic-item">💧 Needs hydration</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-3">
+            <div class="skin-type-info-card" data-type="combination">
+              <h4><i class="fas fa-random"></i> Combination</h4>
+              <p>Mix of oily (usually T-zone) and dry areas, requiring customized care.</p>
+              <div class="skin-type-characteristics">
+                <span class="characteristic-item">⚖️ Mixed texture</span>
+                <span class="characteristic-item">🤝 Dual needs</span>
+                <span class="characteristic-item">🎯 Targeted care</span>
+                <span class="characteristic-item">🔄 Variable</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sensitive Skin Info (takes full row) -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="skin-type-info-card" data-type="sensitive">
+              <h4><i class="fas fa-heart"></i> Sensitive</h4>
+              <p>Reacts easily to irritants and environmental factors, often red or inflamed. Can be combined with any of the above types.</p>
+              <div class="skin-type-characteristics">
+                <span class="characteristic-item">🔴 Easily inflamed</span>
+                <span class="characteristic-item">😤 Reactive</span>
+                <span class="characteristic-item">🧪 Limited tolerance</span>
+                <span class="characteristic-item">🛡️ Needs gentle care</span>
+                <span class="characteristic-item">⚡ Environmental sensitivity</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- Weather Section -->
         <div class="row mb-4">
-          <div class="col-md-6">
+          <div class="col-lg-7">
             <div class="weather-card">
-              <h2 class="section-title"><i class="fas fa-weather-icon"></i> Current Weather in NYC</h2>
-              <div class="weather-info">
-                <div class="temperature-display">
-                  <span id="temperature" class="temp-value">-</span>°F
+              <div class="weather-card-header">
+                <div>
+                  <h2 class="section-title"><i class="fas fa-cloud-sun"></i> Current Weather</h2>
+                  <p class="weather-location">Showing weather for <strong id="cityName">New York, NY</strong></p>
                 </div>
-                <div class="weather-details-grid">
-                  <div class="weather-detail">
-                    <icon class="detail-icon"><i class="fas fa-droplets"></i></icon>
-                    <div class="detail-content">
-                      <span class="detail-label">Humidity</span>
-                      <span id="humidity" class="detail-value">-</span>%
-                    </div>
+                <div class="weather-tag">Updated in real time</div>
+              </div>
+              <div class="weather-summary">
+                <div class="weather-main">
+                  <div class="icon-shell">
+                    <img id="weatherIcon" src="https://openweathermap.org/img/wn/01d@2x.png" alt="Weather icon">
                   </div>
-                  <div class="weather-detail">
-                    <icon class="detail-icon"><i class="fas fa-wind"></i></icon>
-                    <div class="detail-content">
-                      <span class="detail-label">Wind Speed</span>
-                      <span id="windSpeed" class="detail-value">-</span> mph
+                  <div>
+                    <div class="temperature-display">
+                      <span id="temperature" class="temp-value">-</span>°F
                     </div>
-                  </div>
-                  <div class="weather-detail">
-                    <icon class="detail-icon"><i class="fas fa-eye"></i></icon>
-                    <div class="detail-content">
-                      <span class="detail-label">Visibility</span>
-                      <span id="visibility" class="detail-value">-</span> mi
-                    </div>
-                  </div>
-                  <div class="weather-detail">
-                    <icon class="detail-icon"><i class="fas fa-gauge"></i></icon>
-                    <div class="detail-content">
-                      <span class="detail-label">UV Index</span>
-                      <span id="uvIndex" class="detail-value">-</span>
-                    </div>
+                    <p id="weatherDescription" class="condition-text">-</p>
+                    <p id="feelsLike" class="feels-like">Feels like -°F</p>
                   </div>
                 </div>
-                <div class="weather-condition">
-                  <p id="weatherDescription" class="condition-text">-</p>
-                  <p id="feelsLike" class="feels-like">Feels like -°F</p>
+                <div class="weather-range">
+                  <span id="tempRange">High/Low: -° / -°</span>
+                </div>
+              </div>
+              <div class="weather-details-grid">
+                <div class="weather-detail">
+                  <div class="detail-icon"><i class="fas fa-droplets"></i></div>
+                  <div class="detail-content">
+                    <span class="detail-label">Humidity</span>
+                    <span id="humidity" class="detail-value">-</span>%
+                  </div>
+                </div>
+                <div class="weather-detail">
+                  <div class="detail-icon"><i class="fas fa-wind"></i></div>
+                  <div class="detail-content">
+                    <span class="detail-label">Wind</span>
+                    <span id="windSpeed" class="detail-value">-</span> mph <span id="windDirection" class="detail-extra">-</span>
+                  </div>
+                </div>
+                <div class="weather-detail">
+                  <div class="detail-icon"><i class="fas fa-eye"></i></div>
+                  <div class="detail-content">
+                    <span class="detail-label">Visibility</span>
+                    <span id="visibility" class="detail-value">-</span> mi
+                  </div>
+                </div>
+                <div class="weather-detail">
+                  <div class="detail-icon"><i class="fas fa-gauge-high"></i></div>
+                  <div class="detail-content">
+                    <span class="detail-label">Pressure</span>
+                    <span id="pressure" class="detail-value">-</span> hPa
+                  </div>
+                </div>
+                <div class="weather-detail">
+                  <div class="detail-icon"><i class="fas fa-sun"></i></div>
+                  <div class="detail-content">
+                    <span class="detail-label">Sunrise</span>
+                    <span id="sunrise" class="detail-value">-</span>
+                  </div>
+                </div>
+                <div class="weather-detail">
+                  <div class="detail-icon"><i class="fas fa-mountain-sun"></i></div>
+                  <div class="detail-content">
+                    <span class="detail-label">Sunset</span>
+                    <span id="sunset" class="detail-value">-</span>
+                  </div>
+                </div>
+                <div class="weather-detail full-width">
+                  <div class="detail-icon"><i class="fas fa-sun-bright"></i></div>
+                  <div class="detail-content">
+                    <span class="detail-label">UV Index</span>
+                    <span id="uvIndex" class="detail-value">-</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -120,11 +245,47 @@
           </div>
         </div>
 
+        <!-- Forecast Section -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="forecast-card">
+              <h2 class="section-title"><i class="fas fa-chart-line"></i> 5-Day Forecast</h2>
+              <div id="forecastContainer" class="forecast-grid">
+                <!-- Forecast cards generated dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skincare Routine Section -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="routine-card">
+              <h2 class="section-title"><i class="fas fa-list-check"></i> Your Daily Skincare Routine</h2>
+              <div id="routineContainer" class="routine-container">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skincare Tips Section -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="tips-card">
+              <h2 class="section-title"><i class="fas fa-lightbulb"></i> Skincare Tips for Today</h2>
+              <div id="tipsContainer" class="tips-container">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Skincare Recommendations Section -->
         <div class="row">
           <div class="col-12">
             <div class="recommendations-card">
-              <h2 class="section-title"><i class="fas fa-spa"></i> Personalized Skincare Recommendations</h2>
+              <h2 class="section-title"><i class="fas fa-spa"></i> Recommended Products</h2>
               
               <!-- Condition Analysis -->
               <div id="conditionAnalysis" class="condition-analysis mb-4">
@@ -139,13 +300,18 @@
           </div>
         </div>
 
-        <!-- Last Updated -->
+        <!-- Last Updated & Actions -->
         <div class="text-center mt-4 text-muted">
           <small>Last updated: <span id="lastUpdated">-</span></small>
           <br>
-          <button id="refreshBtn" class="btn btn-sm btn-outline-secondary mt-2">
-            <i class="fas fa-sync-alt"></i> Refresh Data
-          </button>
+          <div class="action-buttons mt-3">
+            <button id="refreshBtn" class="btn btn-sm btn-outline-secondary">
+              <i class="fas fa-sync-alt"></i> Refresh Data
+            </button>
+            <button id="clearFavoritesBtn" class="btn btn-sm btn-outline-secondary">
+              <i class="fas fa-trash"></i> Clear Favorites
+            </button>
+          </div>
         </div>
       </div>
     </div>

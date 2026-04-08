@@ -14,15 +14,381 @@ html {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 60%, #f093fb 100%);
   min-height: 100vh;
   padding: 20px 0;
   color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-attachment: fixed;
+}
+
+body.dark-mode {
+  background: linear-gradient(135deg, #0f3460 0%, #16213e 50%, #1a4d6d 100%);
+  color: #e0e0e0;
+  background-attachment: fixed;
 }
 
 .main-container {
   min-height: 100vh;
 }
+
+/* ============================================
+   HEADER SECTION
+   ============================================ */
+
+.header-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 50px 20px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  margin-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+body.dark-mode .header-section {
+  background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.header-text {
+  flex: 1;
+}
+
+.header-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.control-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================
+   SKIN TYPE SELECTOR
+   ============================================ */
+
+.skin-type-selector {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  transition: all 0.3s ease;
+}
+
+body.dark-mode .skin-type-selector {
+  background: #2a2a3e;
+  color: #e0e0e0;
+}
+
+.selector-label {
+  font-weight: 600;
+  color: #667eea;
+  margin: 0;
+  white-space: nowrap;
+}
+
+body.dark-mode .selector-label {
+  color: #7a9ee8;
+}
+
+.skin-type-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.skin-type-btn {
+  padding: 10px 20px;
+  border: 2px solid #e0e0e0;
+  background: transparent;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #333;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .skin-type-btn {
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+.skin-type-btn:hover {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.skin-type-summary {
+  margin-top: 18px;
+  color: #495057;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  background: #f5f7ff;
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(102, 126, 234, 0.15);
+}
+
+body.dark-mode .skin-type-summary {
+  background: #23263d;
+  color: #d3d7f5;
+  border-color: rgba(122, 158, 232, 0.2);
+}
+
+.skin-type-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #667eea;
+}
+
+/* ============================================
+   ROUTINE & TIPS CARDS
+   ============================================ */
+
+.routine-card,
+.tips-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
+}
+
+body.dark-mode .routine-card,
+body.dark-mode .tips-card {
+  background: #2a2a3e;
+  color: #e0e0e0;
+}
+
+.routine-container,
+.tips-container {
+  display: grid;
+  gap: 15px;
+}
+
+.routine-item,
+.tip-item {
+  padding: 15px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #f0f1f5 100%);
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+body.dark-mode .routine-item,
+body.dark-mode .tip-item {
+  background: linear-gradient(135deg, #3a3a4e 0%, #48485e 100%);
+  border-left-color: #7a9ee8;
+}
+
+.routine-item:hover,
+.tip-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+}
+
+.routine-time {
+  font-weight: 700;
+  color: #667eea;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+body.dark-mode .routine-time {
+  color: #7a9ee8;
+}
+
+.routine-steps,
+.tip-content {
+  list-style: none;
+  padding: 0;
+}
+
+.routine-steps li,
+.tip-item p {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+body.dark-mode .routine-steps li,
+body.dark-mode .tip-item p {
+  color: #ccc;
+}
+
+.routine-steps li::before {
+  content: '✓ ';
+  color: #667eea;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+body.dark-mode .routine-steps li::before {
+  color: #7a9ee8;
+}
+
+/* ============================================
+   SKIN TYPE INFORMATION CARDS
+   ============================================ */
+
+.skin-type-info-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #f0f1f5 100%);
+  border-radius: 16px;
+  padding: 24px;
+  border-left: 5px solid #667eea;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  height: 100%;
+}
+
+body.dark-mode .skin-type-info-card {
+  background: linear-gradient(135deg, #3a3a4e 0%, #48485e 100%);
+  border-left-color: #7a9ee8;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.skin-type-info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.2);
+}
+
+.skin-type-info-card.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-left-color: #f093fb;
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+}
+
+.skin-type-info-card h4 {
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #2c3e50;
+}
+
+body.dark-mode .skin-type-info-card h4 {
+  color: #e0e0e0;
+}
+
+.skin-type-info-card.active h4 {
+  color: white;
+}
+
+.skin-type-info-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  color: #555;
+}
+
+body.dark-mode .skin-type-info-card p {
+  color: #ccc;
+}
+
+.skin-type-info-card.active p {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.skin-type-characteristics {
+  font-size: 0.85rem;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+body.dark-mode .skin-type-characteristics {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.skin-type-info-card.active .skin-type-characteristics {
+  border-top-color: rgba(255, 255, 255, 0.2);
+}
+
+.characteristic-item {
+  display: inline-block;
+  padding: 5px 12px;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 14px;
+  font-weight: 600;
+  color: #667eea;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  transition: all 0.2s ease;
+}
+
+body.dark-mode .characteristic-item {
+  background: rgba(122, 158, 232, 0.1);
+  color: #7a9ee8;
+  border-color: rgba(122, 158, 232, 0.2);
+}
+
+.skin-type-info-card.active .characteristic-item {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.skin-type-summary {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+  margin-left: auto;
+  margin-right: 0;
+  padding: 0 10px;
+  min-width: 250px;
+  text-align: right;
+  line-height: 1.5;
+}
+
+body.dark-mode .skin-type-summary {
+  color: #aaa;
+}
+
+
 
 /* ============================================
    HEADER SECTION
@@ -442,6 +808,12 @@ body {
   overflow: hidden;
 }
 
+body.dark-mode .product-card {
+  background: #2a2a3e;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
 .product-card::before {
   content: '';
   position: absolute;
@@ -455,6 +827,36 @@ body {
   transition: transform 0.4s ease;
 }
 
+.product-favorite-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+body.dark-mode .product-favorite-btn {
+  background: rgba(122, 158, 232, 0.2);
+}
+
+.product-favorite-btn:hover {
+  transform: scale(1.1);
+}
+
+.product-favorite-btn.favorited {
+  color: #e74c3c;
+}
+
 .product-card:hover {
   border-color: #667eea;
   box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
@@ -465,18 +867,103 @@ body {
   transform: scaleX(1);
 }
 
-.product-icon {
-  font-size: 2.5rem;
-  text-align: center;
-  margin-bottom: 8px;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-}
-
 .product-name {
   font-weight: 800;
   color: #2c3e50;
   font-size: 1.2rem;
   letter-spacing: -0.3px;
+}
+
+body.dark-mode .product-name {
+  color: #e0e0e0;
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#clearFavoritesBtn {
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+#clearFavoritesBtn:hover {
+  background-color: #e74c3c;
+  color: white;
+}
+
+body.dark-mode .btn-outline-secondary {
+  color: #7a9ee8;
+  border-color: #7a9ee8;
+}
+
+body.dark-mode .btn-outline-secondary:hover {
+  background-color: #7a9ee8;
+  color: white;
+}
+
+/* ============================================
+   DARK MODE ADJUSTMENTS
+   ============================================ */
+
+body.dark-mode .weather-card,
+body.dark-mode .air-quality-card,
+body.dark-mode .recommendations-card {
+  background: #2a2a3e;
+  color: #e0e0e0;
+  border-color: #444;
+}
+
+body.dark-mode .section-title {
+  color: #e0e0e0;
+}
+
+body.dark-mode .section-title i {
+  background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+}
+
+body.dark-mode .weather-detail,
+body.dark-mode .pollutant-item {
+  background: linear-gradient(135deg, #3a3a4e 0%, #48485e 100%);
+  color: #e0e0e0;
+}
+
+body.dark-mode .detail-label,
+body.dark-mode .pollutant-name {
+  color: #aaa;
+}
+
+body.dark-mode .detail-value,
+body.dark-mode .pollutant-value,
+body.dark-mode .temperature-display,
+body.dark-mode .aqi-number {
+  color: #7a9ee8;
+}
+
+body.dark-mode .condition-analysis {
+  background: linear-gradient(135deg, #3a3a4e 0%, #48485e 100%);
+}
+
+body.dark-mode .analysis-item {
+  background: #2a2a3e;
+  border-left-color: #7a9ee8;
+}
+
+body.dark-mode .analysis-text {
+  color: #ccc;
+}
+
+body.dark-mode #errorMessage {
+  background: linear-gradient(135deg, #4a2a2a 0%, #5a3a3a 100%);
+  color: #ffb3b3;
+  border-left-color: #ff6b6b;
 }
 
 .product-category {
