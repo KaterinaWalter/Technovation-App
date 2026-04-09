@@ -11,10 +11,19 @@ const elements = {
 	skinTypeFilter: document.getElementById("skin-type-filter"),
 	metricsGrid: document.getElementById("metrics-grid"),
 	summaryBanner: document.getElementById("summary-banner"),
+	makeupNotes: document.getElementById("makeup-notes"),
 	recommendations: document.getElementById("recommendations"),
+	userModal: document.getElementById("user-modal"),
+	modalForm: document.getElementById("user-profile-form"),
+	genderSelect: document.getElementById("gender-select"),
+	modalSubmitBtn: document.getElementById("modal-submit-btn"),
 };
 
 let latestData = null;
+let userProfile = {
+	gender: "female",
+	makeupTips: true,
+};
 
 const weatherCodeMap = {
 	0: "Clear sky",
@@ -132,6 +141,13 @@ function round(value) {
 	return Math.round(value);
 }
 
+function celsiusToFahrenheit(value) {
+	if (value == null || Number.isNaN(value)) {
+		return null;
+	}
+	return (value * 9) / 5 + 32;
+}
+
 function formatSkinTypeLabel(skinType) {
 	if (skinType === "all") {
 		return "all skin types";
@@ -142,12 +158,44 @@ function formatSkinTypeLabel(skinType) {
 	return `${skinType} skin`;
 }
 
+function openUserModal() {
+	elements.userModal.classList.add("active");
+	elements.genderSelect.focus();
+}
+
+function closeUserModal() {
+	elements.userModal.classList.remove("active");
+}
+
+function collectUserProfile() {
+	const formData = new FormData(elements.modalForm);
+	userProfile.gender = formData.get("gender");
+	userProfile.makeupTips = formData.get("makeup-tips") === "yes";
+}
+
+function showUserModal() {
+	return new Promise((resolve) => {
+		elements.modalForm.addEventListener(
+			"submit",
+			(event) => {
+				event.preventDefault();
+				collectUserProfile();
+				closeUserModal();
+				resolve();
+			},
+			{ once: true }
+		);
+
+		openUserModal();
+	});
+}
+
 function buildRecommendations(data, skinType = "all") {
 	const humidity = data.weather.relative_humidity_2m;
 	const aqi = data.air.us_aqi;
 	const pm25 = data.air.pm2_5;
 	const uv = data.uvIndex;
-	const temp = data.weather.temperature_2m;
+	const temp = celsiusToFahrenheit(data.weather.temperature_2m);
 
 	const items = new Map();
 	const reasons = [];
@@ -234,7 +282,7 @@ function buildRecommendations(data, skinType = "all") {
 		});
 	}
 
-	if (temp <= 5) {
+	if (temp <= 41) {
 		reasons.push("Cold air can increase transepidermal water loss.");
 		addItem("occlusive", {
 			title: "Occlusive Night Balm",
@@ -245,7 +293,7 @@ function buildRecommendations(data, skinType = "all") {
 		});
 	}
 
-	if (temp >= 28) {
+	if (temp >= 82) {
 		reasons.push("Hot weather favors sweat-resistant, lightweight formulas.");
 		addItem("light-lotion", {
 			title: "Lightweight Lotion",
@@ -253,6 +301,29 @@ function buildRecommendations(data, skinType = "all") {
 			levelClass: "good",
 			note: "Swap heavy creams for water-based hydration in daytime.",
 			skinTypes: ["oily", "acne-prone"],
+		});
+	}
+
+	const makeupNotes = [];
+	if (userProfile.makeupTips) {
+		if (humidity > 70) {
+			makeupNotes.push("High humidity can make makeup melt, so use a mattifying primer and blot oil through the day.");
+		}
+		if (humidity < 35) {
+			makeupNotes.push("Dry air can make powder products cling and appear patchy, so hydrate well before makeup.");
+		}
+		if (temp >= 82) {
+			makeupNotes.push("Hot weather can cause makeup to slide, so choose long-wear formulas and set with a light mist.");
+		}
+		if (temp <= 41) {
+			makeupNotes.push("Cold weather can dry skin and disturb foundation finish, so prep with rich moisturizer and a hydrating primer.");
+		}
+		addItem("makeup-prep", {
+			title: "Makeup Prep Routine",
+			tag: "Skin + Makeup",
+			levelClass: "good",
+			note: "Start with clean, hydrated skin and primer suited for the current weather.",
+			skinTypes: ["all"],
 		});
 	}
 
@@ -332,10 +403,14 @@ function buildRecommendations(data, skinType = "all") {
 		skinType === "all"
 			? "Showing recommendations for all skin types."
 			: profileReasons[0] || `Filtered for ${formatSkinTypeLabel(skinType)}.`;
+	const makeupSummary = userProfile.makeupTips
+		? ` Makeup prep and makeup-wear tips are active for ${userProfile.gender}.`
+		: "";
 
 	return {
-		summary: `${summaryBase} ${profileSummary}`,
+		summary: `${summaryBase} ${profileSummary}${makeupSummary}`,
 		products: filteredProducts,
+		makeupNotes,
 	};
 }
 
@@ -345,8 +420,8 @@ function renderMetrics(data) {
 	const cards = [
 		{
 			label: "Temperature",
-			value: `${round(data.weather.temperature_2m)}°C`,
-			note: `Feels like ${round(data.weather.apparent_temperature)}°C`,
+			value: `${round(celsiusToFahrenheit(data.weather.temperature_2m))}°F`,
+			note: `Feels like ${round(celsiusToFahrenheit(data.weather.apparent_temperature))}°F`,
 		},
 		{
 			label: "Humidity",
@@ -393,6 +468,13 @@ function renderRecommendations(data) {
 	const rec = buildRecommendations(data, selectedSkinType);
 
 	elements.summaryBanner.textContent = rec.summary;
+	elements.makeupNotes.innerHTML = "";
+	elements.makeupNotes.classList.add("visually-hidden");
+
+	if (rec.makeupNotes && rec.makeupNotes.length) {
+		elements.makeupNotes.classList.remove("visually-hidden");
+		elements.makeupNotes.innerHTML = `<strong>Makeup weather tips:</strong> ${rec.makeupNotes.join(" ")}`;
+	}
 
 	elements.recommendations.innerHTML = rec.products
 		.map(
@@ -452,4 +534,4 @@ elements.skinTypeFilter.addEventListener("change", () => {
 	setStatus(`Filter applied: ${formatSkinTypeLabel(elements.skinTypeFilter.value)}.`);
 });
 
-loadWeatherAndAdvice();
+showUserModal().then(loadWeatherAndAdvice);

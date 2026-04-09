@@ -282,6 +282,110 @@ h2 {
 	font-weight: 700;
 }
 
+.modal {
+	position: fixed;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	background: rgba(15, 40, 62, 0.65);
+	z-index: 20;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 180ms ease;
+}
+
+.modal.active {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.modal-panel {
+	width: min(540px, 92vw);
+	background: #ffffff;
+	border-radius: 26px;
+	padding: 1.5rem;
+	box-shadow: 0 28px 80px rgba(12, 35, 50, 0.18);
+}
+
+.modal-panel h2 {
+	margin-top: 0;
+	margin-bottom: 0.5rem;
+	font-size: clamp(1.5rem, 2vw, 2rem);
+}
+
+.modal-copy {
+	margin: 0 0 1.2rem;
+	color: var(--muted);
+	line-height: 1.6;
+}
+
+.field-group {
+	margin-bottom: 1rem;
+}
+
+.field-group label,
+.radio-label {
+	display: block;
+	font-size: 0.95rem;
+	margin-bottom: 0.45rem;
+	color: var(--ink);
+}
+
+#gender-select,
+.radio-label input {
+	font: inherit;
+}
+
+#gender-select {
+	width: 100%;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	padding: 0.65rem 0.9rem;
+	background: #fff;
+	outline: none;
+}
+
+.radio-label {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
+	margin-right: 1rem;
+}
+
+.radio-label input {
+	accent-color: var(--primary);
+}
+
+.modal-actions {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.modal-actions button {
+	border: 0;
+	border-radius: 999px;
+	background: linear-gradient(120deg, var(--primary), #0d9794);
+	color: #fff;
+	font-weight: 700;
+	padding: 0.75rem 1.1rem;
+	cursor: pointer;
+}
+
+.makeup-notes {
+	border-radius: 16px;
+	background: rgba(255, 122, 89, 0.12);
+	border: 1px solid rgba(255, 122, 89, 0.18);
+	padding: 0.95rem;
+	color: var(--ink);
+	margin-bottom: 0.9rem;
+	font-size: 0.95rem;
+	line-height: 1.55;
+}
+
+.visually-hidden {
+	display: none;
+}
+
 @keyframes rise-in {
 	from {
 		opacity: 0;
