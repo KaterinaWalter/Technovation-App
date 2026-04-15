@@ -37,6 +37,10 @@ function parseAQI(data) {
   return pm25.value;
 }
 
+function toFahrenheit(value) {
+  return Math.round((value * 9) / 5 + 32);
+}
+
 function weatherCodeToText(code) {
   const map = {
     0: 'Clear sky',
@@ -100,17 +104,17 @@ function displayWeeklyForecast(daily) {
       <h6>${dayName(time[i])}</h6>
       <div class="icon">${weatherCodeToIcon(weathercode[i])}</div>
       <div>${weatherCodeToText(weathercode[i])}</div>
-      <div class="temp-range">${Math.round(temperature_2m_max[i])}° / ${Math.round(temperature_2m_min[i])}°</div>
+      <div class="temp-range">${toFahrenheit(temperature_2m_max[i])}°F / ${toFahrenheit(temperature_2m_min[i])}°F</div>
       <div class="chance">Precip ${Math.round(precipitation_probability_max[i] || 0)}%</div>
     `;
     elements.weeklyForecast.appendChild(card);
   }
 }
 
-function getSkincareRecommendations({ tempC, humidity, precipProb, pm25 }) {
+function getSkincareRecommendations({ tempF, humidity, precipProb, pm25 }) {
   const recs = [];
 
-  if (tempC >= 28) {
+  if (tempF >= 82) {
     recs.push({
       title: 'Warm weather hydration',
       text: 'Use lightweight gel or fluid moisturizers, consider a mattifying sunscreen (SPF 30+) and retinol only at night to avoid sun sensitivity.',
@@ -123,7 +127,7 @@ function getSkincareRecommendations({ tempC, humidity, precipProb, pm25 }) {
       questions: ['How often do you sweat during the day?', 'Do you have acne-prone skin?'],
       bestFor: 'Best for acne-prone and oily skin'
     });
-  } else if (tempC <= 5) {
+  } else if (tempF <= 41) {
     recs.push({
       title: 'Cold-weather barrier repair',
       text: 'Use ceramide-rich creams, nourishing balms and weekly overnight masks to reduce flaking and windburn risk.',
@@ -216,6 +220,14 @@ function getSkincareTopics() {
       title: 'Humectants vs occlusives',
       text: 'Humectants attract water (HA, glycerin), occlusives seal it (squalane, petrolatum). Combine both in dry air setting for best hydration.',
       img: 'https://images.unsplash.com/photo-1617116438612-16f94f4d491f?auto=format&fit=crop&w=400&q=80'
+    },
+    {
+      title: 'Understanding pH balance',
+      text: 'Skin\'s natural pH is slightly acidic (4.5-5.5). Use pH-balanced cleansers to maintain the acid mantle that protects against bacteria.',
+    },
+    {
+      title: 'Sun protection strategies',
+      text: 'UV damage accumulates over time. Use broad-spectrum SPF 30+ daily, reapply every 2 hours, and seek shade during peak sun hours.',
     }
   ];
 }
@@ -228,9 +240,9 @@ function clearError() {
   elements.alerts.innerHTML = '';
 }
 
-function displayWeather({ temp, humidity, weatherDesc, windspeed, precipProb, pm25 }) {
-  // Pretend weather data for demonstration
-  const pretendData = {
+function displayWeather({ temp, humidity, weatherDesc, windspeed, precipProb, pm25, weatherCode }) {
+  // Pretend weather data for demonstration if the API is unavailable
+  const fallbackData = {
     temp: 18,
     feelsLike: 20,
     humidity: 75,
@@ -242,22 +254,32 @@ function displayWeather({ temp, humidity, weatherDesc, windspeed, precipProb, pm
     code: 63  // Moderate rain
   };
 
-  elements.weatherIcon.textContent = pretendData.icon;
+  const currentTemp = temp != null ? temp : fallbackData.temp;
+  const currentFeels = fallbackData.feelsLike;
+  const currentHumidity = humidity != null ? humidity : fallbackData.humidity;
+  const currentConditions = weatherDesc || fallbackData.conditions;
+  const currentWind = windspeed != null ? windspeed : fallbackData.wind;
+  const currentPrecip = precipProb != null ? precipProb : fallbackData.precip;
+  const currentAQI = pm25 != null ? pm25 : fallbackData.aqi;
+  const currentCode = weatherCode != null ? weatherCode : fallbackData.code;
+
+  const currentIcon = weatherCode != null ? weatherCodeToIcon(weatherCode) : fallbackData.icon;
+
+  elements.weatherIcon.textContent = currentIcon;
   elements.weatherIcon.className = 'weather-icon'; // Reset classes
-  // Add rotation based on weather
-  if (pretendData.code >= 51 && pretendData.code <= 82) { // Rain codes
+  if (currentCode >= 51 && currentCode <= 82) {
     elements.weatherIcon.classList.add('rotating');
-  } else if (pretendData.code >= 95) { // Thunderstorm
+  } else if (currentCode >= 95) {
     elements.weatherIcon.classList.add('fast-rotating');
   }
 
-  elements.weatherTemp.textContent = `${pretendData.temp}°C`;
-  elements.feelsLike.textContent = `${pretendData.feelsLike}°C`;
-  elements.humidity.textContent = `${pretendData.humidity}%`;
-  elements.conditions.textContent = pretendData.conditions;
-  elements.wind.textContent = `${pretendData.wind} m/s`;
-  elements.precip.textContent = `${pretendData.precip}%`;
-  elements.aqi.textContent = `${pretendData.aqi} µg/m³`;
+  elements.weatherTemp.textContent = `${toFahrenheit(currentTemp)}°F`;
+  elements.feelsLike.textContent = `${toFahrenheit(currentFeels)}°F`;
+  elements.humidity.textContent = `${currentHumidity}%`;
+  elements.conditions.textContent = currentConditions;
+  elements.wind.textContent = `${currentWind} m/s`;
+  elements.precip.textContent = `${currentPrecip}%`;
+  elements.aqi.textContent = `${currentAQI} µg/m³`;
 }
 
 function displayRecommendations(recs) {
@@ -281,6 +303,26 @@ function displayRecommendations(recs) {
   });
 }
 
+function getTopicIcon(title) {
+  const normalized = title.toLowerCase();
+  if (normalized.includes('barrier') || normalized.includes('ceramides') || normalized.includes('niacinamide')) {
+    return '🛡️';
+  }
+  if (normalized.includes('antioxidant') || normalized.includes('pollution') || normalized.includes('vitamin')) {
+    return '🍃';
+  }
+  if (normalized.includes('humectant') || normalized.includes('occlusive') || normalized.includes('hydration')) {
+    return '💧';
+  }
+  if (normalized.includes('pH') || normalized.includes('balance') || normalized.includes('acid mantle')) {
+    return '⚖️';
+  }
+  if (normalized.includes('sun') || normalized.includes('SPF') || normalized.includes('UV')) {
+    return '☀️';
+  }
+  return '✨';
+}
+
 function displayTopics(topics) {
   const topicsEl = document.getElementById('topics');
   topicsEl.innerHTML = '';
@@ -293,7 +335,9 @@ function displayTopics(topics) {
       <div class="placeholder-icon">📷</div>
       <div class="placeholder-text">Future Image ${index + 1}</div>
     </div>`;
+    const actionIcon = getTopicIcon(topic.title);
     col.innerHTML = `
+      <button class="topic-action-button" aria-label="Topic action">${actionIcon}</button>
       ${imageHtml}
       ${placeholderHtml}
       <h6>${topic.title}</h6>
@@ -325,15 +369,16 @@ async function refreshData() {
       windspeed: current.windspeed,
       precipProb: precipProb || 0,
       pm25,
+      weatherCode: current.weathercode,
     });
 
     displayWeeklyForecast(weatherData.daily);
 
     const recommendations = getSkincareRecommendations({
-      tempC: pretendData.temp,
-      humidity: pretendData.humidity,
-      precipProb: pretendData.precip,
-      pm25: pretendData.aqi,
+      tempF: toFahrenheit(current.temperature != null ? current.temperature : 18),
+      humidity,
+      precipProb: precipProb || 0,
+      pm25,
     });
 
     displayRecommendations(recommendations);

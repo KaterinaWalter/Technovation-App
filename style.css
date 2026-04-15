@@ -1,10 +1,50 @@
-body {
-  background: linear-gradient(180deg, #f3f8ff, #e9f1fe);
+body, button, input, select, textarea {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: #1f4f96;
 }
 
-.card {
-  border: 0;
+body {
+  background: #90c2ff;
+}
+
+
+.decor-icon {
+  position: absolute;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 205, 228, 0.8);
+  border-radius: 999px;
+  box-shadow: 0 12px 35px rgba(160, 47, 170, 0.08);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.decor-sun {
+  top: 1.2rem;
+  right: 1.2rem;
+}
+
+.decor-leaf {
+  top: 12rem;
+  left: 1rem;
+}
+
+.decor-drop {
+  bottom: 6rem;
+  right: 2rem;
+}
+
+.decor-petal {
+  bottom: 4rem;
+  left: 1.2rem;
 }
 
 #alerts .alert {
@@ -22,39 +62,87 @@ body {
 
 #recommendations li ul li {
   font-size: 0.9rem;
-  color: #666;
+  color: #1f4f96;
   margin-bottom: 0.25rem;
 }
 
 #recommendations li strong:last-child {
   display: block;
   margin-top: 0.5rem;
-  color: #3f246d;
+  color: #1f4f96;
   font-size: 0.95rem;
 }
 
-body {
-  color: #2e2f4f;
-  background: linear-gradient(135deg, #ffe7f3 0%, #fff8d2 50%, #e6f2ff 100%);
+h1 {
+  color: #1f4f96;
+  text-shadow: none;
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin-bottom: 0.75rem;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 }
 
-h1, h5 {
-  color: #3f246d;
+h5 {
+  color: #1f4f96;
+  text-shadow: none;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card-title,
+.topic-card h6,
+.weekly-forecast h6,
+.detail-label,
+.placeholder-text,
+#recommendations li strong,
+footer,
+.header-copy {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.card-title,
+.topic-card h6,
+.weekly-forecast h6 {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+header {
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto 1.5rem;
+  padding: 2rem 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: 3px solid #083c91;
+  border-radius: 36px;
+  box-shadow: 0 20px 40px rgba(16, 42, 84, 0.18);
 }
 
 .card {
   border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(62, 30, 100, 0.12);
+  border: 3px solid #083c91;
+  box-shadow: 0 10px 30px rgba(16, 42, 84, 0.12);
+}
+
+#currentConditionsCard {
+  border-width: 5px;
 }
 
 .card-body {
-  background-color: rgba(255, 255, 255, 0.92);
+  background-color: rgba(255, 255, 255, 0.94);
 }
 
 #alerts .alert {
-  background-color: #ffd9e6;
-  border-color: #ffb7d0;
-  color: #61254c;
+  background-color: #fff7c8;
+  border-color: #102a54;
+  color: #1f4f96;
 }
 
 button#refreshBtn {
@@ -72,8 +160,8 @@ button#refreshBtn:hover {
 #topics .topic-card .image-placeholder {
   width: 100%;
   height: 120px;
-  background: linear-gradient(135deg, #e8f4fd, #d1e7f0);
-  border: 3px dashed #4a90e2;
+  background: rgb(126, 172, 241);
+  border: 3px dashed #4278ce;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -103,21 +191,47 @@ button#refreshBtn:hover {
 
 .placeholder-icon {
   font-size: 3rem;
-  color: #4a90e2;
+  color: #1f4f96;
   margin-bottom: 0.5rem;
 }
 
 .placeholder-text {
   font-size: 1rem;
-  color: #357abd;
+  color: #1f4f96;
   font-weight: 500;
   text-align: center;
 }
 
 .topic-card {
+  position: relative;
   margin-bottom: .6rem;
-  border: 2px solid #ffd6f2;
-  background: linear-gradient(125deg, #fff8fb, #f7f4ff);
+  border: 2px solid #102a54;
+  background: linear-gradient(125deg, #fff9d8, #fff0bd);
+  padding-left: 3.5rem;
+}
+
+.topic-card .topic-action-button {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  border: 1px solid #102a54;
+  background: #fff;
+  color: #102a54;
+  font-size: 1rem;
+  box-shadow: 0 8px 18px rgba(16, 42, 84, 0.18);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.topic-card .topic-action-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(16, 42, 84, 0.22);
 }
 
 .weekly-forecast {
@@ -139,7 +253,7 @@ button#refreshBtn:hover {
 .weekly-forecast .forecast-card h6 {
   font-size: 0.92rem;
   margin-bottom: .5rem;
-  color: #5b3f86;
+  color: #1f4f96;
 }
 
 .weekly-forecast .forecast-card .icon {
@@ -150,13 +264,13 @@ button#refreshBtn:hover {
 .weekly-forecast .forecast-card .temp-range {
   font-size: 0.92rem;
   margin-top: .45rem;
-  color: #3a3153;
+  color: #1f4f96;
 }
 
 .weekly-forecast .forecast-card .chance {
   margin-top: .35rem;
   font-size: 0.78rem;
-  color: #6f5e87;
+  color: #1f4f96;
 }
 
 .current-weather {
@@ -180,12 +294,12 @@ button#refreshBtn:hover {
 .weather-temp {
   font-size: 3rem;
   font-weight: bold;
-  color: #3f246d;
+  color: #1f4f96;
 }
 
 .weather-condition {
   font-size: 1.2rem;
-  color: #5b3f86;
+  color: #1f4f96;
   margin-bottom: 1rem;
 }
 
@@ -208,12 +322,12 @@ button#refreshBtn:hover {
 
 .detail-label {
   font-weight: 500;
-  color: #622b7e;
+  color: #1f4f96;
 }
 
 .detail-value {
   font-weight: bold;
-  color: #3a3153;
+  color: #1f4f96;
 }
 
 .weather-icon.rotating {
@@ -239,12 +353,12 @@ button#refreshBtn:hover {
 .topic-card h6 {
   margin-top: .5rem;
   font-size: 1rem;
-  color: #622b7e;
+  color: #1f4f96;
 }
 
 .topic-card p {
   font-size: .88rem;
   margin-bottom: .5rem;
-  color: #4f3f6f;
+  color: #1f4f96;
 }
 
