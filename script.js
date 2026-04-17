@@ -17,6 +17,8 @@ const elements = {
 	modalForm: document.getElementById("user-profile-form"),
 	genderSelect: document.getElementById("gender-select"),
 	modalSubmitBtn: document.getElementById("modal-submit-btn"),
+	nycLearnToggle: document.getElementById("nyc-learn-toggle"),
+	nycLearnContent: document.getElementById("nyc-learn-content"),
 };
 
 let latestData = null;
@@ -304,6 +306,57 @@ function buildRecommendations(data, skinType = "all") {
 		});
 	}
 
+	// Hard water is common in NYC (80-120 mg/L calcium carbonate, up to 180 in some areas)
+	reasons.push("NYC has moderately hard water that can build up on skin and reduce product effectiveness.");
+	addItem("chelating-cleanser", {
+		title: "Chelating or Mineral-Binding Cleanser",
+		tag: "NYC Hard Water",
+		levelClass: "warn",
+		note: "Use a chelating cleanser with EDTA or citrates to remove hard water mineral deposits (2-3x weekly or daily for sensitive areas).",
+		skinTypes: ["all"],
+	});
+	addItem("chelating-toner", {
+		title: "Chelating or Mineral-Binding Toner",
+		tag: "NYC Hard Water",
+		levelClass: "warn",
+		note: "Apply after cleansing to bind and remove residual calcium and magnesium before serums.",
+		skinTypes: ["all"],
+	});
+
+	// NYC-specific: Urban bacteria, transit exposure, and stress-related acne
+	reasons.push("Living in NYC means exposure to urban bacteria from public transit and high-stress environments that trigger acne.");
+	addItem("antibacterial-treatment", {
+		title: "Niacinamide + Antimicrobial Treatment",
+		tag: "Urban Bacteria Defense",
+		levelClass: "warn",
+		note: "Use products with niacinamide (4-5%) and zinc to strengthen skin barrier against bacteria from transit and public spaces.",
+		skinTypes: ["all"],
+	});
+	addItem("stress-calming", {
+		title: "Stress-Relief Serum (Cica/CBD/Oat)",
+		tag: "NYC Stress Support",
+		levelClass: "warn",
+		note: "Incorporate calming ingredients to combat cortisol-triggered inflammation and stress acne around jawline and neck.",
+		skinTypes: ["all"],
+	});
+
+	// NYC-specific: Dehydration from air conditioning
+	reasons.push("NYC's heavy air conditioning creates chronic dehydration that weakens skin barriers and accelerates aging.");
+	addItem("dehydration-fix", {
+		title: "Multi-Layer Hydration System",
+		tag: "AC Dehydration Recovery",
+		levelClass: "warn",
+		note: "Layer hydrating toner → hydrating essence → hydrating serum (hyaluronic acid, glycerin) → moisturizer to combat transepidermal water loss.",
+		skinTypes: ["all"],
+	});
+	addItem("facial-mist", {
+		title: "Hydrating Facial Mist",
+		tag: "Midday Boost",
+		levelClass: "good",
+		note: "Keep a hydrating mist at your desk to refresh skin throughout the day in temperature-controlled offices.",
+		skinTypes: ["all"],
+	});
+
 	const makeupNotes = [];
 	if (userProfile.makeupTips) {
 		if (humidity > 70) {
@@ -532,6 +585,19 @@ elements.skinTypeFilter.addEventListener("change", () => {
 	}
 	renderRecommendations(latestData);
 	setStatus(`Filter applied: ${formatSkinTypeLabel(elements.skinTypeFilter.value)}.`);
+});
+
+// Learn More Toggle for NYC Skin Health
+elements.nycLearnToggle.addEventListener("click", () => {
+	const isExpanded = elements.nycLearnToggle.getAttribute("aria-expanded") === "true";
+	
+	if (isExpanded) {
+		elements.nycLearnContent.hidden = true;
+		elements.nycLearnToggle.setAttribute("aria-expanded", "false");
+	} else {
+		elements.nycLearnContent.hidden = false;
+		elements.nycLearnToggle.setAttribute("aria-expanded", "true");
+	}
 });
 
 showUserModal().then(loadWeatherAndAdvice);

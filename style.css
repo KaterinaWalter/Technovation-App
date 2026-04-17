@@ -44,6 +44,240 @@ body {
 	opacity: 0.2;
 }
 
+.water-quality-info {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 1.5rem;
+	margin-top: 1rem;
+}
+
+.info-card {
+	background: var(--card);
+	border-radius: 0.75rem;
+	padding: 1.5rem;
+	border: 1px solid var(--line);
+	line-height: 1.6;
+}
+
+.info-card h3 {
+	margin: 0 0 1rem 0;
+	color: var(--primary);
+	font-size: 1.125rem;
+	font-family: "Fraunces", serif;
+}
+
+.info-card p {
+	margin: 0.75rem 0;
+	color: var(--ink);
+	font-size: 0.95rem;
+}
+
+.info-card ul {
+	margin: 0.75rem 0;
+	padding-left: 1.25rem;
+	color: var(--ink);
+	font-size: 0.95rem;
+}
+
+.info-card li {
+	margin: 0.5rem 0;
+}
+
+/* NYC Skin Health Section */
+.section-subtitle {
+	margin: 0.5rem 0 1.5rem;
+	color: var(--muted);
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+/* Learn More Collapsible Button */
+.learn-more-btn {
+	width: 100%;
+	border: none;
+	background: linear-gradient(135deg, rgba(0, 122, 120, 0.12), rgba(255, 122, 89, 0.06));
+	border: 1.5px solid var(--primary);
+	border-radius: 0.75rem;
+	padding: 1rem 1.25rem;
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 1.05rem;
+	font-family: "Space Grotesk", sans-serif;
+	font-weight: 600;
+	color: var(--primary);
+	transition: all 300ms ease;
+	margin-bottom: 1rem;
+}
+
+.learn-more-btn:hover {
+	background: linear-gradient(135deg, rgba(0, 122, 120, 0.18), rgba(255, 122, 89, 0.1));
+	box-shadow: 0 4px 12px rgba(0, 122, 120, 0.15);
+	transform: translateY(-2px);
+}
+
+.learn-more-btn:active {
+	transform: translateY(0);
+}
+
+.btn-label {
+	flex: 1;
+	text-align: left;
+}
+
+.toggle-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 1rem;
+	font-size: 0.9rem;
+	transition: transform 300ms ease;
+}
+
+.learn-more-btn[aria-expanded="true"] .toggle-icon {
+	transform: rotate(180deg);
+}
+
+/* Learn More Content - Initially Hidden */
+.learn-more-content {
+	animation: slideDown 350ms ease forwards;
+	overflow: hidden;
+}
+
+.learn-more-content[hidden] {
+	display: none;
+}
+
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		max-height: 0;
+		overflow: hidden;
+	}
+	to {
+		opacity: 1;
+		max-height: 2000px;
+		overflow: visible;
+	}
+}
+
+.nyc-skin-intro {
+	background: linear-gradient(135deg, rgba(0, 122, 120, 0.08), rgba(255, 122, 89, 0.08));
+	border-left: 4px solid var(--primary);
+	padding: 1.25rem;
+	border-radius: 0.5rem;
+	margin-bottom: 2rem;
+	line-height: 1.7;
+}
+
+.nyc-skin-intro p {
+	margin: 0;
+	color: var(--ink);
+	font-size: 1rem;
+}
+
+.nyc-skin-factors {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 1.5rem;
+	margin: 2rem 0;
+}
+
+.factor-card {
+	background: var(--card);
+	border: 1px solid var(--line);
+	border-radius: 0.75rem;
+	padding: 1.5rem;
+	line-height: 1.6;
+	transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.factor-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 24px rgba(0, 122, 120, 0.12);
+}
+
+.factor-card h3 {
+	margin: 0 0 1rem 0;
+	color: var(--primary);
+	font-size: 1.15rem;
+	font-family: "Fraunces", serif;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.factor-card p {
+	margin: 0.75rem 0;
+	color: var(--ink);
+	font-size: 0.95rem;
+}
+
+.factor-card strong {
+	color: var(--primary);
+	font-weight: 600;
+}
+
+.factor-card ul {
+	margin: 1rem 0;
+	padding-left: 1.25rem;
+	color: var(--ink);
+	font-size: 0.95rem;
+}
+
+.factor-card li {
+	margin: 0.6rem 0;
+	line-height: 1.5;
+}
+
+.skincare-importance {
+	background: linear-gradient(135deg, rgba(0, 122, 120, 0.1), rgba(255, 122, 89, 0.08));
+	border: 1px solid rgba(0, 122, 120, 0.2);
+	border-radius: 1rem;
+	padding: 2rem;
+	margin-top: 2rem;
+}
+
+.skincare-importance h3 {
+	margin: 0 0 1.25rem 0;
+	color: var(--primary);
+	font-size: 1.3rem;
+	font-family: "Fraunces", serif;
+}
+
+.skincare-importance p {
+	margin: 0 0 1.25rem 0;
+	color: var(--ink);
+	font-size: 1rem;
+	line-height: 1.7;
+}
+
+.skincare-importance ul {
+	margin: 0;
+	padding-left: 1.5rem;
+	display: grid;
+	gap: 0.8rem;
+}
+
+.skincare-importance li {
+	color: var(--ink);
+	font-size: 0.95rem;
+	line-height: 1.6;
+	list-style: none;
+	padding-left: 1.5rem;
+	position: relative;
+}
+
+.skincare-importance li:before {
+	content: "✓";
+	position: absolute;
+	left: 0;
+	color: var(--good);
+	font-weight: 700;
+	font-size: 1.1rem;
+}
+
 .shape-2 {
 	width: 300px;
 	height: 300px;
